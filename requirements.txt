@@ -5,3 +5,4 @@ speechrecognition==3.10.0
 googletrans==4.0.0-rc1
 transformers==4.30.0
 torch==2.2.0
+pillow==8.4.0
