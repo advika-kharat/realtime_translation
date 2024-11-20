@@ -4,4 +4,4 @@ pygame==2.5.2
 speechrecognition==3.10.0
 googletrans==4.0.0-rc1
 transformers==4.30.0
-torch==2.1.0
+torch==2.2.0
