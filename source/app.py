@@ -57,10 +57,12 @@ def main_process(output_placeholder, spoken_text_placeholder, translated_text_pl
         rec = sr.Recognizer()
         with sr.Microphone() as source:
             output_placeholder.text("Listening...")
+            print("listenning")
             rec.pause_threshold = 1
             audio = rec.listen(source, phrase_time_limit=10)
 
         try:
+
             output_placeholder.text("Processing...")
             spoken_text = rec.recognize_google(audio, language=from_language)
             st.session_state.total_text += spoken_text + " "  # Accumulate the spoken text
@@ -137,7 +139,7 @@ Explore Gen AI for developers
 
 '''
     # total_text_placeholder.text_area(new_text)
-    #
+
     # summary_placeholder.text_area(summarize_text(new_text))
 
 
