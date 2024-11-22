@@ -3,7 +3,7 @@ from gtts import gTTS
 import streamlit as st
 import speech_recognition as sr
 from googletrans import LANGUAGES, Translator
-from transformers import pipeline  # For summarization
+from transformers import pipeline  # For BART summarization
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas  # For PDF creation
 from io import BytesIO  # For in-memory PDF
@@ -14,7 +14,7 @@ from playsound import playsound  # For playing audio
 isTranslateOn = False
 
 translator = Translator()  # Initialize the translator module.
-summarizer = pipeline("summarization")  # Initialize the summarization model
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")  # Using Facebook's BART model
 
 # Create a mapping between language names and language codes
 language_mapping = {name: code for code, name in LANGUAGES.items()}
@@ -40,9 +40,12 @@ def text_to_voice(text_data, to_language):
 
 
 def generate_summary(text_data):
-    # Use the summarizer pipeline to generate a summary of the translated text
-    summarized = summarizer(text_data, max_length=50, min_length=25, do_sample=False)
-    return summarized[0]['summary_text']
+    try:
+        # Use the BART model to generate a summary of the text
+        summarized = summarizer(text_data, max_length=150, min_length=50, do_sample=False)
+        return summarized[0]['summary_text']
+    except Exception as e:
+        return f"Error generating summary: {str(e)}"
 
 
 def create_pdf(summary_text):
