@@ -1,8 +1,0 @@
-streamlit==1.24.0
-gTTS==2.2.4
-pygame==2.5.2
-speechrecognition==3.10.0
-googletrans==4.0.0-rc1
-transformers==4.30.0
-torch==2.2.0
-pillow==8.4.0
