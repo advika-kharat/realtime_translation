@@ -1,5 +1,4 @@
 import os
-import pygame
 from gtts import gTTS
 import streamlit as st
 import speech_recognition as sr
@@ -8,14 +7,13 @@ from transformers import pipeline  # For summarization
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas  # For PDF creation
 from io import BytesIO  # For in-memory PDF
-from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet  # For better text formatting
+from playsound import playsound  # For playing audio
 
 isTranslateOn = False
 
 translator = Translator()  # Initialize the translator module.
-pygame.mixer.init()  # Initialize the mixer module.
 summarizer = pipeline("summarization")  # Initialize the summarization model
 
 # Create a mapping between language names and language codes
@@ -33,10 +31,10 @@ def translator_function(spoken_text, from_language, to_language):
 def text_to_voice(text_data, to_language):
     try:
         myobj = gTTS(text=text_data, lang=to_language, slow=False)
-        myobj.save("cache_file.mp3")
-        audio = pygame.mixer.Sound("cache_file.mp3")  # Load a sound.
-        audio.play()
-        os.remove("cache_file.mp3")
+        file_path = "cache_file.mp3"
+        myobj.save(file_path)
+        playsound(file_path)  # Play the audio file
+        os.remove(file_path)  # Clean up the file
     except Exception as e:
         print(f"Error in text_to_voice: {str(e)}")
 
